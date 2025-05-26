@@ -1,0 +1,32 @@
+GET http://localhost:5000/users
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEzLCJuYW1lIjoiQmF5dSBXaXByYWRueWFuYSIsImVtYWlsIjoidGVzdDEyMzQ1IiwiaWF0IjoxNzQ4MTgwMTQ3LCJleHAiOjE3NDgxODAxOTd9.1ufOWCojI3SUXtRs_TIZVKOKDIIWXwPzwm7wQ3wM6_8
+
+
+
+###
+POST http://localhost:5000/users
+Content-Type: application/json
+
+{
+    "name": "Bayu Wipradnyana",
+    "email": "test12345",
+    "password": "123456",
+    "confPassword": "123456"
+}
+
+
+###
+POST http://localhost:5000/login
+Content-Type: application/json
+
+{
+    "email": "test12345",
+    "password": "123456"
+}
+
+###
+GET http://localhost:5000/token
+
+
+###
+DELETE http://localhost:5000/logout
