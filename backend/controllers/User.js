@@ -17,21 +17,30 @@ export const getUsers = async (req, res) => {
 }
 
 export const Register = async (req, res) => {
-    const { name, email, password, confPassword } = req.body;
-    if (password !== confPassword) {
-        return res.status(400).json({ msg: "Password dan Confirm Password tidak cocok" })
+    console.log("--- Register controller function was HIT! ---"); // <--- ADD THIS LINE
+    console.log("Request body received:", req.body);             // <--- AND THIS LINE
+
+    const { name, email, password, confPassword } = req.body; // Or use 'confirmPassword' if you change it
+    // ... rest of your code
+    if (password !== confPassword) { // Adjust variable if you changed it above
+        console.log("Password mismatch check triggered.");
+        return res.status(400).json({ msg: "Password dan Confirm Password tidak cocok" });
     }
-    const salt = await bcrypt.genSalt();
-    const hashPassword = await bcrypt.hash(password, salt);
+    // ... rest of your code
     try {
+        const salt = await bcrypt.genSalt();
+        const hashPassword = await bcrypt.hash(password, salt);
+        console.log("Attempting to create user...");
         await Users.create({
             name: name,
             email: email,
-            password: hashPassword
+            password: hashPassword // Ensure hashPassword is defined from bcrypt
         });
-        res.json({ msg: "Register Berhasil" });
+        console.log("User creation successful.");
+        res.status(201).json({ msg: "Register Berhasil" }); // Changed to 201 for resource creation
     } catch (error) {
-        console.log(error);
+        console.error("Error during Users.create:", error); // Log the full error
+        res.status(500).json({ msg: "Server error during registration" }); // Send error response
     }
 }
 
